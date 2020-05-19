@@ -8,7 +8,42 @@ import { mkdirpObservable } from "fs-observable";
 import * as jupyterPaths from "jupyter-paths";
 import * as kernelspecs from "kernelspecs";
 import { join, resolve } from "path";
+import yargs from "yargs/yargs";
+
+import { KernelspecInfo, Kernelspecs } from "@nteract/types";
+
+import {
+  app,
+  BrowserWindow,
+  dialog,
+  Event,
+  ipcMain as ipc,
+  IpcMainEvent,
+  Menu,
+  Tray,
+} from "electron";
+import {
+  mkdirpObservable,
+  readFileObservable,
+  writeFileObservable,
+} from "fs-observable";
 import { forkJoin, fromEvent, Observable, Subscriber, zip } from "rxjs";
+import {
+  buffer,
+  catchError,
+  first,
+  mergeMap,
+  skipUntil,
+  takeUntil,
+  tap,
+} from "rxjs/operators";
+
+import {
+  QUITTING_STATE_NOT_STARTED,
+  QUITTING_STATE_QUITTING,
+  setKernelSpecs,
+  setQuittingState,
+} from "./actions";
 import { buffer, first, mergeMap, skipUntil, takeUntil } from "rxjs/operators";
 import yargs from "yargs/yargs";
 import { QUITTING_STATE_NOT_STARTED, QUITTING_STATE_QUITTING, setKernelSpecs, setQuittingState } from "./actions";
@@ -55,12 +90,12 @@ ipc.on("open-notebook", (_event: any, filename: string) => {
   launch(resolve(filename));
 });
 
-ipc.on("reload", (event: Event) => {
+ipc.on("reload", (event: IpcMainEvent) => {
   event.sender.reload();
   event.returnValue = null;
 });
 
-ipc.on("show-message-box", (event: Event, arg: any) => {
+ipc.on("show-message-box", (event: IpcMainEvent, arg: any) => {
   const response = dialog.showMessageBox(arg);
   event.sender.send("show-message-box-response", response);
 });
@@ -68,7 +103,7 @@ ipc.on("show-message-box", (event: Event, arg: any) => {
 app.on("ready", initAutoUpdater);
 
 const electronReady$ = new Observable((observer) => {
-  app.on("ready", (event: Event) => observer.next(event));
+  (app as any).on("ready", (launchInfo: Object) => observer.next(launchInfo));
 });
 const windowReady$ = fromEvent(ipc, "react-ready");
 
@@ -88,6 +123,11 @@ const prepJupyterObservable = prepareEnv.pipe(
       // The config directory is taken care of by the configuration myths
     )
   ),
+  tap((file) => {
+    if (file) {
+      Object.assign(CONFIG, JSON.parse(file.toString("utf8")));
+    }
+  })
 );
 
 const kernelSpecsPromise = prepJupyterObservable
