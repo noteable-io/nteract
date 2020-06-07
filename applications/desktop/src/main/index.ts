@@ -55,6 +55,12 @@ import { loadFullMenu, loadTrayMenu } from "./menu";
 import prepareEnv from "./prepare-env";
 import configureStore from "./store";
 
+// FIXME: Needed to load zeromq for now, but deprecated and to be removed in
+//        electron@11. Need to figure out how to get a version of zmq that
+//        complies with the new requirements for native modules.
+//        See also: https://github.com/electron/electron/issues/18397
+app.allowRendererProcessReuse = false
+
 const store = configureStore(undefined);
 
 // HACK: The main process store should not be stored in a global.

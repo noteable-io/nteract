@@ -159,5 +159,8 @@
     "electron": "9.0.0",
     "file-loader": "^6.0.0",
     "utility-types": "^3.10.0"
+  },
+  "resolutions": {
+    "**/node-abi": "2.17.0"
   }
 }
