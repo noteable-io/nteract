@@ -183,7 +183,8 @@ export default class App extends React.PureComponent {
   }
 }
 
-ipc.send("transfer-config-options-to-main", allConfigOptions());
+// FIXME: failure to serialize
+// ipc.send("transfer-config-options-to-main", allConfigOptions());
 
 const app = document.querySelector("#app");
 

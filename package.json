@@ -181,7 +181,7 @@
     "@types/redux-immutable": "^4.0.0",
     "@types/redux-logger": "^3.0.6",
     "@types/semver": "^7.0.0",
-    "@types/styled-components": "^4.1.4",
+    "@types/styled-components": "^5.0.1",
     "@types/webfontloader": "^1.6.29",
     "concurrently": "^5.0.0",
     "cpy-cli": "^3.0.0",

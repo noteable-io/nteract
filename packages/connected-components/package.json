@@ -21,12 +21,12 @@
   "peerDependencies": {
     "immutable": "^4.0.0-rc.12",
     "react": "^16.3.2",
-    "styled-components": ">= 4"
+    "styled-components": ">= 5.0.1"
   },
   "author": "Kyle Kelley <rgbkrk@gmail.com>",
   "license": "BSD-3-Clause",
   "devDependencies": {
     "@nteract/fixtures": "^2.3.7",
-    "styled-components": "^4.4.1"
+    "styled-components": "^5.0.1"
   }
 }

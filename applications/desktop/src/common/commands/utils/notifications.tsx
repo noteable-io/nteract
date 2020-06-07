@@ -31,7 +31,7 @@ export const FilePathMessage = (props: { filepath: string }) =>
           ? "document"
           : "folder-close",
         onClick: i === props.filepath.split("/").length - 1
-          ? () => shell.openItem(props.filepath)
+          ? async () => await shell.openPath(props.filepath)
           : undefined
       }))}/>
     </NoWrap>

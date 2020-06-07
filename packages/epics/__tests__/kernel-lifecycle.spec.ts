@@ -10,15 +10,13 @@ import { TestScheduler } from "rxjs/testing";
 
 import {
   acquireKernelInfo,
+  launchKernelWhenNotebookSetEpic,
   restartKernelEpic,
-  watchExecutionStateEpic,
-  launchKernelWhenNotebookSetEpic
+  watchExecutionStateEpic
 } from "../src/kernel-lifecycle";
 
 const buildScheduler = () =>
   new TestScheduler((actual, expected) => expect(actual).toEqual(expected));
-
-stateModule.createKernelRef = () => "newKernelRef";
 
 describe("acquireKernelInfo", () => {
   test("sends a kernel_info_request and processes kernel_info_reply", async done => {
@@ -490,7 +488,7 @@ describe("restartKernelEpic", () => {
           contentRef
         }),
         b: actionsModule.launchKernelSuccessful({
-          kernel: "",
+          kernel: undefined,
           kernelRef: newKernelRef,
           contentRef,
           selectNextKernel: true
@@ -569,8 +567,9 @@ describe("restartKernelEpic", () => {
           contentRef: "contentRef"
         }),
         b: actionsModule.launchKernelSuccessful({
-          kernel: "",
+          kernel: undefined,
           kernelRef: newKernelRef,
+          contentRef: "contentRef",
           selectNextKernel: true
         })
       };
@@ -717,7 +716,7 @@ describe("launchKernelWhenNotebookSet", () => {
     );
   });
   it("does nothing if content already has a kernel", done => {
-    let state = mockAppState({});
+    const state = mockAppState({});
     const contentRef: string = state.core.entities.contents.byRef
       .keySeq()
       .first();

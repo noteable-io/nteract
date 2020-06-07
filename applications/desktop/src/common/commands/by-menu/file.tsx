@@ -67,7 +67,7 @@ export const Open: DesktopCommand = {
       defaultPath: process.cwd() === "/"
         ? app.getPath("home")
         : undefined,
-    }, (fname?: string[]) => {
+    }).then(({ filePaths: fname }) => {
       if (fname) {
         launch(fname[0]);
         app.addRecentDocument(fname[0]);
@@ -200,7 +200,7 @@ export const ExportPDF: DesktopCommand<ReqContent> = {
       level: "success",
       action: {
         label: "Open",
-        callback: () => shell.openItem(pdfPath),
+        callback: async () => await shell.openPath(pdfPath),
       },
     });
   },

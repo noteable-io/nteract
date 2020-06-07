@@ -1,6 +1,6 @@
-import { ConfigurationOption, setConfigFile, defineConfigOption } from "@nteract/mythic-configuration";
+import { ConfigurationOption, defineConfigOption, setConfigFile } from "@nteract/mythic-configuration";
 import { KernelspecInfo, Kernelspecs } from "@nteract/types";
-import { app, BrowserWindow, dialog, Event, ipcMain as ipc, Menu, Tray } from "electron";
+import { app, BrowserWindow, dialog, Event, ipcMain as ipc, IpcMainEvent, Menu, Tray } from "electron";
 import initContextMenu from "electron-context-menu";
 import * as log from "electron-log";
 import { existsSync } from "fs";
@@ -8,43 +8,8 @@ import { mkdirpObservable } from "fs-observable";
 import * as jupyterPaths from "jupyter-paths";
 import * as kernelspecs from "kernelspecs";
 import { join, resolve } from "path";
-import yargs from "yargs/yargs";
-
-import { KernelspecInfo, Kernelspecs } from "@nteract/types";
-
-import {
-  app,
-  BrowserWindow,
-  dialog,
-  Event,
-  ipcMain as ipc,
-  IpcMainEvent,
-  Menu,
-  Tray,
-} from "electron";
-import {
-  mkdirpObservable,
-  readFileObservable,
-  writeFileObservable,
-} from "fs-observable";
 import { forkJoin, fromEvent, Observable, Subscriber, zip } from "rxjs";
-import {
-  buffer,
-  catchError,
-  first,
-  mergeMap,
-  skipUntil,
-  takeUntil,
-  tap,
-} from "rxjs/operators";
-
-import {
-  QUITTING_STATE_NOT_STARTED,
-  QUITTING_STATE_QUITTING,
-  setKernelSpecs,
-  setQuittingState,
-} from "./actions";
-import { buffer, first, mergeMap, skipUntil, takeUntil } from "rxjs/operators";
+import { buffer, first, mergeMap, skipUntil, takeUntil, tap } from "rxjs/operators";
 import yargs from "yargs/yargs";
 import { QUITTING_STATE_NOT_STARTED, QUITTING_STATE_QUITTING, setKernelSpecs, setQuittingState } from "./actions";
 import { initAutoUpdater } from "./auto-updater";
@@ -129,11 +94,6 @@ const prepJupyterObservable = prepareEnv.pipe(
       // The config directory is taken care of by the configuration myths
     )
   ),
-  tap((file) => {
-    if (file) {
-      Object.assign(CONFIG, JSON.parse(file.toString("utf8")));
-    }
-  })
 );
 
 const kernelSpecsPromise = prepJupyterObservable
