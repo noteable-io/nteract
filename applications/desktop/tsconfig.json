@@ -8,6 +8,9 @@
     { "path": "../../packages/core" },
     { "path": "../../packages/types" },
     { "path": "../../packages/editor" },
+    { "path": "../../packages/mythic-configuration" },
+    { "path": "../../packages/mythic-notifications" },
+    { "path": "../../packages/myths" },
     { "path": "../../packages/notebook-app-component" },
     { "path": "../../packages/presentational-components" },
     { "path": "../../packages/styles" }

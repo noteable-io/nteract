@@ -24,7 +24,7 @@ import {
 import DataExplorer from "@nteract/data-explorer";
 import WidgetDisplay from "@nteract/jupyter-widgets";
 import * as MathJax from "@nteract/mathjax";
-import { allConfigOptions } from "@nteract/mythic-configuration";
+import { allConfigOptionDefinitions } from "@nteract/mythic-configuration";
 import NotebookApp from "@nteract/notebook-app-component";
 import { Media } from "@nteract/outputs";
 
@@ -183,8 +183,7 @@ export default class App extends React.PureComponent {
   }
 }
 
-// FIXME: failure to serialize
-// ipc.send("transfer-config-options-to-main", allConfigOptions());
+ipc.send("transfer-config-options-to-main", allConfigOptionDefinitions());
 
 const app = document.querySelector("#app");
 

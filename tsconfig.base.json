@@ -11,6 +11,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "sourceMap": true,
     "noImplicitAny": true,
     "plugins": [
       { "name": "typescript-styled-plugin" },

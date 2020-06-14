@@ -13,6 +13,17 @@ export * from "./types";
 const options: {[key: string]: ConfigurationOption} = {};
 const deprecated: {[key: string]: <T>(value: T) => { [key: string]: T }} = {};
 
+const strippedToDefinition = <T>(option: ConfigurationOptionDefinition<T>) => {
+  // Make a copy and trim everything down to just the spec
+  const definition: ConfigurationOptionDefinition<T> = {...option};
+
+  unset(definition, "value");
+  unset(definition, "selector");
+  unset(definition, "action");
+
+  return definition;
+}
+
 export const defineConfigOption = <TYPE>(
   props: ConfigurationOptionDefinition<TYPE>,
 ) => {
@@ -21,15 +32,8 @@ export const defineConfigOption = <TYPE>(
   }
 
   if (props.key in options) {
-    // Make copies and trim everything down to just the spec
-    const oldSpec = {...options[props.key]};
-    const newSpec = {...props};
-
-    unset(oldSpec, "value");
-    unset(oldSpec, "selector");
-    unset(oldSpec, "action");
-
-    unset(newSpec, "value");
+    const oldSpec = strippedToDefinition(options[props.key]);
+    const newSpec = strippedToDefinition(props);
 
     if (!isEqual(oldSpec, newSpec)) {
       console.group(`Duplicate configuration option "${props.key}"`)
@@ -93,6 +97,9 @@ export const createConfigCollection = <TYPE>(
     return actual[key];
   },
 );
+
+export const allConfigOptionDefinitions = () =>
+  Object.values(options).map(strippedToDefinition);
 
 export const allConfigOptions = (state?: HasPrivateConfigurationState) => {
   const all = Object.values(options);
