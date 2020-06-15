@@ -1,6 +1,6 @@
 import { actions as actionsModule, state as stateModule } from "@nteract/core";
 import { mockAppState } from "@nteract/fixtures";
-import { createMessage, JupyterMessage, MessageType, payloads } from "@nteract/messaging";
+import { createMessage, JupyterMessage, MessageType } from "@nteract/messaging";
 import { sendNotification } from "@nteract/mythic-notifications";
 import * as Immutable from "immutable";
 import { StateObservable } from "redux-observable";
@@ -17,6 +17,11 @@ import {
 
 const buildScheduler = () =>
   new TestScheduler((actual, expected) => expect(actual).toEqual(expected));
+
+// Need to import this directly from the file to reassign it, because TS doesn't
+// create a setter for re-exported names anymore.
+import * as refs from "@nteract/types/lib/refs";
+jest.spyOn(refs, "createKernelRef").mockReturnValue("newKernelRef");
 
 describe("acquireKernelInfo", () => {
   test("sends a kernel_info_request and processes kernel_info_reply", async done => {
