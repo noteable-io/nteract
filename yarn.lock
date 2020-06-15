@@ -2417,16 +2417,7 @@
     "@nteract/presentational-components" "^3.3.11"
     react-markdown "^4.0.0"
 
-"@nteract/mathjax@4.0.7":
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/@nteract/mathjax/-/mathjax-4.0.7.tgz#9aef85b04e12eda7d6c2506fbc676c40837ffc11"
-  integrity sha512-FwdZmaGXJ3AY8u68k8ZBXvck3SgOLAjruc0c0nCqdQC/ahK/l1xwPjabE/cqcWCHQtBbzMgZpxLbwGnP8Uszuw==
-  dependencies:
-    load-script "^1.0.0"
-    react "^16.13.0"
-    react-dom "^16.13.0"
-
-"@nteract/mathjax@^4.0.7":
+"@nteract/mathjax@4.0.7", "@nteract/mathjax@^4.0.7":
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/@nteract/mathjax/-/mathjax-4.0.7.tgz#9aef85b04e12eda7d6c2506fbc676c40837ffc11"
   integrity sha512-FwdZmaGXJ3AY8u68k8ZBXvck3SgOLAjruc0c0nCqdQC/ahK/l1xwPjabE/cqcWCHQtBbzMgZpxLbwGnP8Uszuw==
@@ -2843,10 +2834,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/codemirror@^0.0.95":
-  version "0.0.95"
-  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.95.tgz#8fe424989cd5a6d7848f124774d42ef34d91adb8"
-  integrity sha512-E7w4HS8/rR7Rxkga6j68n3/Mi4BJ870/OJJKRqytyWiM659KnbviSng/NPfM/FOjg7YL+5ruFF69FqoLChnPBw==
+"@types/codemirror@^0.0.96":
+  version "0.0.96"
+  resolved "https://registry.yarnpkg.com/@types/codemirror/-/codemirror-0.0.96.tgz#73b52e784a246cebef31d544fef45ea764de5bad"
+  integrity sha512-GTswEV26Bl1byRxpD3sKd1rT2AISr0rK9ImlJgEzfvqhcVWeu4xQKFQI6UgSC95NT5swNG4st/oRMeGVZgPj9w==
   dependencies:
     "@types/tern" "*"
 
@@ -3007,10 +2998,10 @@
     "@types/istanbul-lib-coverage" "*"
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^25.0.0":
-  version "25.2.3"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-25.2.3.tgz#33d27e4c4716caae4eced355097a47ad363fdcaf"
-  integrity sha512-JXc1nK/tXHiDhV55dvfzqtmP4S3sy3T3ouV2tkViZgxY/zeUkcpQcQPGRlgF4KmWzWW5oiWYSZwtCB+2RsE4Fw==
+"@types/jest@^26.0.0":
+  version "26.0.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-26.0.0.tgz#a6d7573dffa9c68cbbdf38f2e0de26f159e11134"
+  integrity sha512-/yeMsH9HQ1RLORlXAwoLXe8S98xxvhNtUz3yrgrwbaxYjT+6SFPZZRksmRKRA6L5vsUtSHeN71viDOTTyYAD+g==
   dependencies:
     jest-diff "^25.2.1"
     pretty-format "^25.2.1"
