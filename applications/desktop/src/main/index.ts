@@ -9,7 +9,7 @@ import * as jupyterPaths from "jupyter-paths";
 import * as kernelspecs from "kernelspecs";
 import { join, resolve } from "path";
 import { forkJoin, fromEvent, Observable, Subscriber, zip } from "rxjs";
-import { buffer, first, mergeMap, skipUntil, takeUntil, tap } from "rxjs/operators";
+import { buffer, first, mergeMap, skipUntil, takeUntil } from "rxjs/operators";
 import yargs from "yargs/yargs";
 import { QUITTING_STATE_NOT_STARTED, QUITTING_STATE_QUITTING, setKernelSpecs, setQuittingState } from "./actions";
 import { initAutoUpdater } from "./auto-updater";
