@@ -12,6 +12,13 @@ Provide a bulleted list of breaking changes and a reference to the PR(s) contain
 
 #### New Features
 
+- Upgraded electron v5.0.13 → v9.0.0 ([Changelog](https://github.com/electron/electron/releases)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
+  * Chromium updated to v83 
+- Upgraded electron-builder v22.1.0 → v22.7.0 ([Changelog](https://github.com/electron-userland/electron-builder/releases)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
+- Upgraded electron-context-menu v0.16.0 → v2.0.1 ([Changelog](https://github.com/sindresorhus/electron-context-menu/releases)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
+- Upgraded electron-log v4.0.0 → v4.2.1 ([Changelog](https://github.com/megahertz/electron-log/blob/master/CHANGELOG.md)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
+- Upgraded electron-updater v4.2.0 → v4.3.1 ([Changelog](https://github.com/electron-userland/electron-builder/blob/master/packages/electron-updater/CHANGELOG.md)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
+
 Provide a bulleted list of new features or improvements and a reference to the PR(s) containing these changes.
 
 #### Bug Fixes
@@ -55,6 +62,8 @@ Provide a bulleted list of bug fixes and a reference to the PR(s) containing the
 Provide a bulleted list of breaking changes and a reference to the PR(s) containing those changes.
 
 #### New Features
+
+- Upgraded styled-components v4.4.1 → v5.0.1 ([Changelog](https://github.com/styled-components/styled-components/blob/master/CHANGELOG.md)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
 
 Provide a bulleted list of new features or improvements and a reference to the PR(s) containing these changes.
 
@@ -210,6 +219,8 @@ Provide a bulleted list of breaking changes and a reference to the PR(s) contain
 
 #### New Features
 
+- Upgraded styled-components v4.4.1 → v5.0.1 ([Changelog](https://github.com/styled-components/styled-components/blob/master/CHANGELOG.md)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
+
 Provide a bulleted list of new features or improvements and a reference to the PR(s) containing these changes.
 
 #### Bug Fixes
@@ -223,6 +234,8 @@ Provide a bulleted list of bug fixes and a reference to the PR(s) containing the
 Provide a bulleted list of breaking changes and a reference to the PR(s) containing those changes.
 
 #### New Features
+
+- Upgraded styled-components v4.4.1 → v5.0.1 ([Changelog](https://github.com/styled-components/styled-components/blob/master/CHANGELOG.md)) ([PR#5115](https://github.com/nteract/nteract/pull/5115))
 
 Provide a bulleted list of new features or improvements and a reference to the PR(s) containing these changes.
 
@@ -269,6 +282,8 @@ Provide a bulleted list of breaking changes and a reference to the PR(s) contain
 Provide a bulleted list of new features or improvements and a reference to the PR(s) containing these changes.
 
 #### Bug Fixes
+
+- Fixed session field in messages not being updated properly. ([PR#5115](https://github.com/nteract/nteract/pull/5115))
 
 Provide a bulleted list of bug fixes and a reference to the PR(s) containing the changes.
 
