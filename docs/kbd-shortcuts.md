@@ -33,3 +33,68 @@ The nteract desktop app provides the following keyboard shortcuts for common act
 | Restart Kernel                   | Alt+R, R                                        |
 | Restart Kernel and Clear         | Alt+R, C                                        |
 | Restart Kernel and Run All       | Alt+R, A                                        |
+
+## Customizing Keyboard Shortcuts
+
+Some keyboard shortcuts are customizable by changing the nteract config file. The config file is located in the Jupyter directory (e.g. `~/.jupyter`) and called `nteract.json`.
+
+The syntax is the following:
+```json
+{
+  "keyboardShortcuts": {
+    "PublishGist": "Ctrl+P",
+    "ClearAll": "Ctrl+Alt+C"
+  }
+}
+```
+No restart is required &mdash; nteract should pick up the change and display the new keyboard shortcuts in the menu when the config file is saved.
+
+**Supported commands:**
+* About
+* BringAllToFront
+* ChangeCellToCode
+* ChangeCellToText
+* ClearAll
+* ClearRecentDocuments
+* Close
+* Copy
+* CopyCell
+* Cut
+* CutCell
+* DeleteCell
+* DevTools
+* ExportPDF
+* Fullscreen
+* Hide
+* HideOthers
+* InstallShellCommand
+* InterruptKernel
+* KillKernel
+* Launch
+* LaunchNewNotebook
+* Minimize
+* NewCodeCellAbove
+* NewCodeCellBelow
+* NewKernel
+* NewNotebook
+* NewRawCellBelow
+* NewTextCellBelow
+* Open
+* Paste
+* PasteCell
+* PublishGist
+* Quit
+* Reload
+* RestartAndClearAll
+* RestartAndRunAll
+* RestartKernel
+* RunAll
+* RunAllBelow
+* Save
+* SaveAs
+* SelectAll
+* Unhide
+* UnhideAll
+* ZoomIn
+* ZoomOut
+* ZoomReset

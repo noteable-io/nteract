@@ -1,9 +1,9 @@
 import {
   actions as coreActions,
   DocumentRecordProps,
-  selectors
+  selectors,
 } from "@nteract/core";
-import { ipcRenderer as ipc } from "electron";
+import { ipcRenderer as ipc, IpcRendererEvent, MessageBoxReturnValue } from "electron";
 import { RecordOf } from "immutable";
 import { ofType, StateObservable } from "redux-observable";
 import { concat, empty, Observable, Observer, of, zip } from "rxjs";
@@ -14,7 +14,7 @@ import {
   filter,
   take,
   tap,
-  timeout
+  timeout,
 } from "rxjs/operators";
 
 import * as actions from "../actions";
@@ -22,7 +22,7 @@ import { CLOSE_NOTEBOOK, CloseNotebook } from "../actionTypes";
 import {
   DESKTOP_NOTEBOOK_CLOSING_NOT_STARTED,
   DESKTOP_NOTEBOOK_CLOSING_READY_TO_CLOSE,
-  DesktopNotebookAppState
+  DesktopNotebookAppState,
 } from "../state";
 
 import { KernelRecord, KernelRef } from "@nteract/types";
@@ -38,7 +38,7 @@ export const closeNotebookEpic = (
       const contentRef = action.payload.contentRef;
       const state = state$.value;
       const model = selectors.model(state, {
-        contentRef
+        contentRef,
       }) as RecordOf<DocumentRecordProps>;
 
       let dirtyPromptObservable: Observable<boolean>;
@@ -48,12 +48,13 @@ export const closeNotebookEpic = (
             type: "question",
             buttons: ["Quit", "Cancel"],
             title: "Confirm",
-            message: "Unsaved data will be lost. Are you sure you want to quit?"
+            message:
+              "Unsaved data will be lost. Are you sure you want to quit?",
           };
           ipc.once(
             "show-message-box-response",
-            (_event: string, arg: number) => {
-              observer.next(arg === 0);
+            (_event: IpcRendererEvent, arg: MessageBoxReturnValue) => {
+              observer.next(arg.response === 0);
               observer.complete();
             }
           );
@@ -76,7 +77,7 @@ export const closeNotebookEpic = (
             killKernelActions.push(
               coreActions.killKernel({
                 restarting: false,
-                kernelRef
+                kernelRef,
               })
             );
 
@@ -108,7 +109,7 @@ export const closeNotebookEpic = (
 
       const awaitKillKernelResults = zip(...killKernelAwaits).pipe(
         timeout(1000 * 5), // This should be at least as long as the timeout used to wait for kernel to reply to shutdown msgs
-        tap(result => {
+        tap((result) => {
           for (const r of result) {
             console.log(JSON.stringify(r)); // To see these in terminal, set ELECTRON_ENABLE_LOGGING=1. Could also start more explicitly routing them to main process stdout.
           }
@@ -131,7 +132,7 @@ export const closeNotebookEpic = (
 
       const updateClosingState = of(
         actions.closeNotebookProgress({
-          newState: DESKTOP_NOTEBOOK_CLOSING_READY_TO_CLOSE // This is what allows the window to unload
+          newState: DESKTOP_NOTEBOOK_CLOSING_READY_TO_CLOSE, // This is what allows the window to unload
         })
       );
 
@@ -156,7 +157,7 @@ export const closeNotebookEpic = (
             // Reset notebook state to allow another attempt later
             return of(
               actions.closeNotebookProgress({
-                newState: DESKTOP_NOTEBOOK_CLOSING_NOT_STARTED
+                newState: DESKTOP_NOTEBOOK_CLOSING_NOT_STARTED,
               })
             );
           }

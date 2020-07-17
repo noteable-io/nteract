@@ -26,13 +26,13 @@ export function showSaveAsDialog(): Promise<string> {
       options.defaultPath = defaultPath;
     }
 
-    remote.dialog.showSaveDialog(options, filepath => {
+    remote.dialog.showSaveDialog(options).then(({ filePath }) => {
       // If there was a filepath set and the extension name for it is blank,
       // append `.ipynb`
       resolve(
-        filepath && path.extname(filepath) === ""
-          ? `${filepath}.ipynb`
-          : filepath
+        filePath && path.extname(filePath) === ""
+          ? `${filePath}.ipynb`
+          : filePath
       );
     });
   });
@@ -55,8 +55,9 @@ export function promptUserAboutNewKernel(
           "The kernel executing your code thinks your notebook is still in " +
           "the old location. Would you like to launch a new kernel to match " +
           "it with the new location of the notebook?"
-      },
-      index => {
+      }
+    ).then(
+      ({ response: index }) => {
         if (index === 0) {
           const state = store.getState();
           const oldKernelRef = selectors.kernelRefByContentRef(state, ownProps);

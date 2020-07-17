@@ -1,15 +1,15 @@
 import { join } from "path";
 
-import { Event, ipcMain as ipc } from "electron";
+import { ipcMain as ipc, IpcMainEvent } from "electron";
 
-import { KernelspecInfo, Kernelspecs } from "@nteract/types";
+import { Kernelspecs } from "@nteract/types";
 
 const builtInNodeArgv: string[] = [
   process.execPath,
   join(__dirname, "..", "node_modules", "ijavascript", "lib", "kernel.js"),
   "{connection_file}",
   "--protocol=5.0",
-  "--hide-undefined"
+  "--hide-undefined",
 ];
 
 const KERNEL_SPECS: Kernelspecs = {
@@ -21,10 +21,10 @@ const KERNEL_SPECS: Kernelspecs = {
       language: "javascript",
       env: {
         ELECTRON_RUN_AS_NODE: "1",
-        NODE_PATH: join(__dirname, "..", "node_modules")
-      }
-    }
-  }
+        NODE_PATH: join(__dirname, "..", "node_modules"),
+      },
+    },
+  },
 };
 
 export default function initializeKernelSpecs(
@@ -34,6 +34,6 @@ export default function initializeKernelSpecs(
   return KERNEL_SPECS;
 }
 
-ipc.on("kernel_specs_request", (event: Event) => {
-  event.sender.send("kernel_specs_reply", KERNEL_SPECS);
+ipc.on("kernel_specs_request", (event: IpcMainEvent) => {
+  event.reply("kernel_specs_reply", KERNEL_SPECS);
 });

@@ -66,7 +66,7 @@ describe("closeNotebookEpic", () => {
         );
 
         // "Yes"
-        registeredCallback("dummy-event", 0);
+        registeredCallback("dummy-event", {response: 0});
       };
 
       const state = buildState(true);

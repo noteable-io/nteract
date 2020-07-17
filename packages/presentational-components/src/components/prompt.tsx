@@ -78,7 +78,6 @@ Prompt.defaultProps = {
   queued: false,
   blank: false,
 };
-
 Prompt.displayName = "Prompt";
 
 export const PromptBuffer = styled(Prompt)``;

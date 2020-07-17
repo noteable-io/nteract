@@ -1,12 +1,11 @@
+import { JupyterMessage } from "@nteract/messaging";
+import { ServerConfig } from "@nteract/types";
+import URLSearchParams from "@ungap/url-search-params";
 import { Subject, Subscriber } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { webSocket } from "rxjs/webSocket";
 import urljoin from "url-join";
-import URLSearchParams from "@ungap/url-search-params";
 import { createAJAXSettings } from "./base";
-
-import { ServerConfig } from "@nteract/types";
-import { JupyterMessage } from "@nteract/messaging";
 
 /**
  * Creates an AjaxObservable for listing running kernels.
@@ -160,8 +159,8 @@ export const connect = (
           const sessionizedMessage = {
             ...message,
             header: {
-              session: sessionID,
-              ...message.header
+              ...message.header,
+              session: sessionID ?? message.header.session,
             }
           };
 

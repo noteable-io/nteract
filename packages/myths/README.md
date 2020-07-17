@@ -2,7 +2,17 @@
 
 **This is a pre-alpha level package; interfaces are not stable yet!**
 
-This framework allows for integrating sets of closely related actions, reducers and epics while mainting high DRY and minimizing dependencies. It provides for a structured way to avoid boilerplate. 
+The `myths` framework allows for integrating sets of closely related actions, reducers and epics. Myths allow
+close relationships where DRY and dependencies are minimized. Therefore, Myths provide for a structured way
+to avoid boilerplate.
+
+Myths build on top of the [Redux](https://react-redux.js.org/) and
+[RxJS](https://redux.js.org/) libraries that are used elsewhere in the nteract core SDK.
+As a refresher, Redux helps you maintain application state. In Redux, actions and reducers provide
+predictable state management. The state may only be changed by dispatching an action to a reducer.
+In [Redux-Observable](https://redux-observable.js.org/), an epic
+is a function that takes in a stream of actions and returns
+a stream of actions.
 
 ## Installation
 
@@ -16,7 +26,11 @@ $ npm install --save myths
 
 ## Usage
 
-First, create a `MythicPackage` with a name, a type for its private state, and the initial state:
+### MythicPackage
+
+First, create a `MythicPackage` with a name, a type for its private state, and the initial state.
+As an example, the following creates a `MythicPackage` named `"iCanAdd"` which uses the `number`
+type for its private state `sum` and an initial state of `sum` as `0`:
 
 ```typescript
 export const iCanAdd = createMythicPackage("iCanAdd")<
@@ -30,7 +44,11 @@ export const iCanAdd = createMythicPackage("iCanAdd")<
 });
 ```
 
-You can the use the package to create a `Myth`, again with a name, a type for its payload and optionally a reducer operating on its package's private state:
+### Myth
+
+Next, you can the use the `MythicPackage` to create a `Myth` with a name, a type for its payload, and optionally a reducer
+operating on its package's private state. In this example, the `MythicPackage` named `iCanAdd` creates a `Myth`
+named `"addToSum"`:
 
 ```typescript
 export const addToSum =
@@ -40,11 +58,17 @@ export const addToSum =
   });
 ```
 
-A package can have any number of myths. To create an action based on a myth, use its create function. You can then dispatch this action normally:
+A package can have any number of myths.
+
+### Action
+
+To create an action based on a myth, use its `create` function. You can then dispatch this action normally:
 
 ```typescript
 store.dispatch(addToSum.create(8));
 ```
+
+### Store
 
 You get a store from a set of mythic packages, which has all the appropriate reducers and epics already in place:
 
@@ -58,9 +82,9 @@ const configureStore = makeConfigureStore<NonPrivateState>()({
 export const store = configureStore({ foo: "bar" });
 ```
 
-## Epic Definitions
+## Epics: their definition
 
-To define epics there are two different shorthand definitions available:
+Epics can be defined using two different shorthand methods:
 
 ```typescript
 export const addToSum =
@@ -78,7 +102,7 @@ export const addToSum =
 
     andAlso: [
       {
-        // Half the sum every time an error action happens
+        // Halve the sum every time an error action happens
         when: action => action.error ?? false,
         dispatch: (action, state, addToSum_) =>
           of(addToSum_.create(-state.get("sum") / 2)),
@@ -88,9 +112,9 @@ export const addToSum =
   });
 ```
 
-Use `thenDispatch: []` to define actions then should be dispatched when actions of the type defined are dispatched, and `andAlso: []` to
-generate actions based on a custom predicate. Since the type being defined is not available for reference yet, it is
-passed as third argument to the dispatch function.
+The first method uses `thenDispatch: []` to define actions which should be dispatched when actions of the defined type
+are dispatched, and the second method uses `andAlso: []` to generate actions based on a custom predicate.
+Since the type being defined is not available for reference yet, it is passed as third argument to the dispatch function.
  
 ## Testing
 
@@ -99,7 +123,8 @@ without evaluating reducers.
 
 ## Support
 
-If you experience an issue while using this package or have a feature request, please file an issue on the [issue board](https://github.com/nteract/nteract/issues/new/choose) and add the `pkg:myths` label.
+If you experience an issue while using this package or have a feature request, please file an issue on
+the [issue board](https://github.com/nteract/nteract/issues/new/choose) and add the `pkg:myths` label.
 
 ## License
 

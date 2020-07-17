@@ -14,7 +14,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "styled-components": "^4.4.1"
+    "styled-components": "^5.0.1"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.7.0",
@@ -24,7 +24,7 @@
     "immutable": "^4.0.0-rc.12",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "styled-components": ">= 4"
+    "styled-components": ">= 5.0.1"
   },
   "author": "nteract contributers",
   "license": "BSD-3-Clause"

@@ -25,14 +25,16 @@ export const Tip: StyledComponent<"div", {}, TipProps> = styled.div`
   background-color: var(--theme-app-bg, #2b2b2b);
   box-shadow: 2px 2px 50px rgba(0, 0, 0, 0.2);
   float: right;
-  height: auto;
+  height: 50vh;
   left: ${(props: TipProps) => props.cursorCoords.left}px;
   margin: 30px 20px 50px 20px;
+  overflow-y: auto;
   padding: 20px 20px 50px 20px;
   position: absolute;
   top: ${(props: TipProps) => props.cursorCoords.top}px;
   white-space: pre-wrap;
-  width: auto;
+  width: 100vh;
+  overflow-wrap: break-word;
   z-index: 9999999;
 `;
 

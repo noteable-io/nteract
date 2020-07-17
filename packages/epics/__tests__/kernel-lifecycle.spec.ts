@@ -1,6 +1,6 @@
 import { actions as actionsModule, state as stateModule } from "@nteract/core";
 import { mockAppState } from "@nteract/fixtures";
-import { createMessage, JupyterMessage, MessageType, payloads } from "@nteract/messaging";
+import { createMessage, JupyterMessage, MessageType } from "@nteract/messaging";
 import { sendNotification } from "@nteract/mythic-notifications";
 import * as Immutable from "immutable";
 import { StateObservable } from "redux-observable";
@@ -10,15 +10,18 @@ import { TestScheduler } from "rxjs/testing";
 
 import {
   acquireKernelInfo,
+  launchKernelWhenNotebookSetEpic,
   restartKernelEpic,
-  watchExecutionStateEpic,
-  launchKernelWhenNotebookSetEpic
+  watchExecutionStateEpic
 } from "../src/kernel-lifecycle";
 
 const buildScheduler = () =>
   new TestScheduler((actual, expected) => expect(actual).toEqual(expected));
 
-stateModule.createKernelRef = () => "newKernelRef";
+// Need to import this directly from the file to reassign it, because TS doesn't
+// create a setter for re-exported names anymore.
+import * as refs from "@nteract/types/lib/refs";
+jest.spyOn(refs, "createKernelRef").mockReturnValue("newKernelRef");
 
 describe("acquireKernelInfo", () => {
   test("sends a kernel_info_request and processes kernel_info_reply", async done => {
@@ -490,7 +493,7 @@ describe("restartKernelEpic", () => {
           contentRef
         }),
         b: actionsModule.launchKernelSuccessful({
-          kernel: "",
+          kernel: undefined,
           kernelRef: newKernelRef,
           contentRef,
           selectNextKernel: true
@@ -569,8 +572,9 @@ describe("restartKernelEpic", () => {
           contentRef: "contentRef"
         }),
         b: actionsModule.launchKernelSuccessful({
-          kernel: "",
+          kernel: undefined,
           kernelRef: newKernelRef,
+          contentRef: "contentRef",
           selectNextKernel: true
         })
       };
@@ -717,7 +721,7 @@ describe("launchKernelWhenNotebookSet", () => {
     );
   });
   it("does nothing if content already has a kernel", done => {
-    let state = mockAppState({});
+    const state = mockAppState({});
     const contentRef: string = state.core.entities.contents.byRef
       .keySeq()
       .first();

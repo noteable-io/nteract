@@ -1,6 +1,6 @@
-import { ConfigurationOption, setConfigFile, defineConfigOption } from "@nteract/mythic-configuration";
+import { ConfigurationOption, defineConfigOption, setConfigFile } from "@nteract/mythic-configuration";
 import { KernelspecInfo, Kernelspecs } from "@nteract/types";
-import { app, BrowserWindow, dialog, Event, ipcMain as ipc, Menu, Tray } from "electron";
+import { app, BrowserWindow, dialog, Event, ipcMain as ipc, IpcMainEvent, Menu, Tray } from "electron";
 import initContextMenu from "electron-context-menu";
 import * as log from "electron-log";
 import { existsSync } from "fs";
@@ -19,6 +19,12 @@ import { launch, launchNewNotebook } from "./launch";
 import { loadFullMenu, loadTrayMenu } from "./menu";
 import prepareEnv from "./prepare-env";
 import configureStore from "./store";
+
+// FIXME: Needed to load zeromq for now, but deprecated and to be removed in
+//        electron@11. Need to figure out how to get a version of zmq that
+//        complies with the new requirements for native modules.
+//        See also: https://github.com/electron/electron/issues/18397
+app.allowRendererProcessReuse = false
 
 const store = configureStore(undefined);
 
@@ -55,20 +61,20 @@ ipc.on("open-notebook", (_event: any, filename: string) => {
   launch(resolve(filename));
 });
 
-ipc.on("reload", (event: Event) => {
+ipc.on("reload", (event: IpcMainEvent) => {
   event.sender.reload();
   event.returnValue = null;
 });
 
-ipc.on("show-message-box", (event: Event, arg: any) => {
-  const response = dialog.showMessageBox(arg);
+ipc.on("show-message-box", async (event: IpcMainEvent, arg: any) => {
+  const response = await dialog.showMessageBox(arg);
   event.sender.send("show-message-box-response", response);
 });
 
 app.on("ready", initAutoUpdater);
 
 const electronReady$ = new Observable((observer) => {
-  app.on("ready", (event: Event) => observer.next(event));
+  (app as any).on("ready", (launchInfo: Object) => observer.next(launchInfo));
 });
 const windowReady$ = fromEvent(ipc, "react-ready");
 

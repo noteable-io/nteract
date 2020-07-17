@@ -22,7 +22,7 @@
     "@nteract/commutable": "^7.3.0",
     "@nteract/core": "^15.0.0",
     "@nteract/fixtures": "^2.3.8",
-    "@nteract/markdown": "4.4.0",
+    "@nteract/markdown": "4.5.1",
     "@nteract/mythic-configuration": "^1.0.0",
     "@nteract/outputs": "^3.0.9",
     "@nteract/presentational-components": "^3.4.0",

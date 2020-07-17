@@ -67,7 +67,7 @@ export const Open: DesktopCommand = {
       defaultPath: process.cwd() === "/"
         ? app.getPath("home")
         : undefined,
-    }, (fname?: string[]) => {
+    }).then(({ filePaths: fname }) => {
       if (fname) {
         launch(fname[0]);
         app.addRecentDocument(fname[0]);

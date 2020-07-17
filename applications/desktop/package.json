@@ -136,6 +136,7 @@
     "@blueprintjs/core": "^3.7.0",
     "@nteract/data-explorer": "^8.0.0",
     "@nteract/examples": "3.2.0",
+    "@nteract/mathjax": "4.0.9",
     "@nteract/transform-geojson": "^5.1.13",
     "@nteract/transform-plotly": "^6.1.10",
     "@nteract/transform-vdom": "^4.0.15",
@@ -149,15 +150,19 @@
     "lodash.throttle": "^4.1.1",
     "mathjax-electron": "^3.0.0",
     "nteract-assets": "^4.0.0",
-    "rxjs": "^6.5.5"
+    "rxjs": "^6.6.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.0",
     "@types/lodash.sample": "^4.2.6",
     "@types/lodash.sortby": "^4.7.6",
     "@types/lodash.throttle": "^4.1.6",
-    "electron": "5.0.13",
+    "electron": "7.3.2",
     "file-loader": "^6.0.0",
     "utility-types": "^3.10.0"
+  },
+  "resolutions": {
+    "**/node-abi": "2.17.0",
+    "**/@nteract/mathjax": "4.0.9"
   }
 }

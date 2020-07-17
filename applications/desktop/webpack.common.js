@@ -37,7 +37,9 @@ const mainConfig = {
   resolve: {
     mainFields: ["nteractDesktop", "es2015", "jsnext:main", "module", "main"],
     extensions: [".js", ".jsx", ".ts", ".tsx"],
-    alias: configurator.mergeDefaultAliases(),
+    alias: {
+      ...configurator.mergeDefaultAliases(),
+    },
   },
   plugins: [new webpack.IgnorePlugin(/\.(css|less)$/)],
 };
@@ -81,6 +83,9 @@ const rendererConfig = {
         "node_modules",
         "styled-components"
       ),
+      // Max. one of those two, please
+      react: path.resolve('./node_modules/react'),
+      "react-dom": path.resolve('./node_modules/react-dom'),
     },
   },
   plugins: [],
