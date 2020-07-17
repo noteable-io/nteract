@@ -26,6 +26,8 @@
     "start": "npm run app:desktop",
     "spawn": "lerna run spawn --scope nteract",
     "spawn:debug": "lerna run spawn:debug --scope nteract --stream",
+    "geas:lint": "cross-env NODE_OPTIONS=--max-old-space-size=6144 eslint . --ext .js,.jsx,.ts,.tsx --quiet",
+    "geas:fix": "eslint . --ext .js,.jsx,.ts,.tsx --quiet --fix",
     "lint": "npm run lint:ts",
     "lint:fix": "npm run lint:ts:fix",
     "lint:ts": "tslint --config tslint.json --project tsconfig.base.json --force --format stylish",
