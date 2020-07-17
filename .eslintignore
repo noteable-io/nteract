@@ -11,3 +11,15 @@ coverage
 node_modules/
 */**/__snapshots__/
 
+# ---
+# Noteable geas
+# ---
+
+# don't ever lint node_modules
+node_modules
+
+# don't lint build output (make sure it's set to your correct build folder name)
+dist
+
+# don't lint nyc coverage output
+coverage
